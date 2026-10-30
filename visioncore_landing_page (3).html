@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionCore - Enterprise Industrial Surveillance System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        slate: {
+                            850: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, rgba(248, 250, 252, 0) 70%);
+        }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+            border-color: #CBD5E1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Version -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid me-0 fa-shield-halved text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="font-extrabold text-xl tracking-tight text-slate-900">VISION<span class="text-brand-500">CORE</span></span>
+                        <span class="px-2 py-0.5 text-xs font-semibold bg-brand-50 text-brand-700 rounded-full border border-brand-200/60">v1.1.9.8</span>
+                    </div>
+                    <span class="text-[10px] font-medium tracking-wider text-slate-500 uppercase">Industrial Surveillance</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#features" class="hover:text-brand-600 transition-colors">Capabilities</a>
+                <a href="#specifications" class="hover:text-brand-600 transition-colors">Specifications</a>
+                <a href="#security" class="hover:text-brand-600 transition-colors">Security</a>
+                <a href="#architecture" class="hover:text-brand-600 transition-colors">Enterprise Standard</a>
+            </nav>
+
+            <!-- Download Action Button -->
+            <div class="hidden sm:flex items-center gap-4">
+                <a href="https://github.com/Ranasugars/VisionCore/releases/download/v1.1.9.8/VisionCore.Installation.exe" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white font-medium text-sm hover:bg-brand-600 shadow-sm transition-all duration-200 active:scale-95">
+                    <i class="fa-solid fa-download text-xs"></i>
+                    <span>Download Installer</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-600 hover:text-slate-900 focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3">
+            <a href="#features" class="block py-2 text-slate-600 font-medium hover:text-brand-600">Capabilities</a>
+            <a href="#specifications" class="block py-2 text-slate-600 font-medium hover:text-brand-600">Specifications</a>
+            <a href="#security" class="block py-2 text-slate-600 font-medium hover:text-brand-600">Security</a>
+            <a href="#architecture" class="block py-2 text-slate-600 font-medium hover:text-brand-600">Enterprise Standard</a>
+            <div class="pt-2">
+                <a href="https://github.com/Ranasugars/VisionCore/releases/download/v1.1.9.8/VisionCore.Installation.exe" 
+                   class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-brand-500 text-white font-semibold text-sm shadow-md">
+                    <i class="fa-solid fa-download text-xs"></i>
+                    Download VisionCore v1.1.9.8
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section class="relative hero-gradient pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                
+                <!-- Release Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-8 animate-fade-in">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-slate-700">VisionCore v1.1.9.8 Production Release</span>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-xs text-brand-600 font-medium">Windows 7/10/11 Compatible</span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.15]">
+                    Enterprise-Grade Industrial CCTV Monitoring & Surveillance
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed">
+                    Ultra-low latency RTSP camera matrix engine built for mission-critical operations, role-based access control, and centralized multi-screen monitoring setups.
+                </p>
+
+                <!-- Primary CTAs -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://github.com/Ranasugars/VisionCore/releases/download/v1.1.9.8/VisionCore.Installation.exe" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-brand-500 text-white font-semibold text-base shadow-lg shadow-brand-500/25 hover:bg-brand-600 hover:shadow-brand-500/35 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download VisionCore v1.1.9.8</span>
+                    </a>
+                    
+                    <a href="#specifications" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-700 font-semibold text-base border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200">
+                        <i class="fa-solid fa-list-check text-slate-400"></i>
+                        <span>System Requirements</span>
+                    </a>
+                </div>
+
+                <!-- Direct Link Info -->
+                <p class="mt-4 text-xs text-slate-400 font-mono">
+                    Direct Binary Link: VisionCore.Installation.exe (Safe Windows Signed Architecture)
+                </p>
+
+                <!-- Stats Grid -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
+                    <div class="glass-card p-5 rounded-2xl text-center">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">RTSP TCP</div>
+                        <div class="text-xs font-medium text-slate-500 mt-1">High-Speed Hardware Decoding</div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl text-center">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-brand-600">&lt; 1000ms</div>
+                        <div class="text-xs font-medium text-slate-500 mt-1">Optimized Network Caching</div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl text-center">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">Dual-Role</div>
+                        <div class="text-xs font-medium text-slate-500 mt-1">Admin & Operator Authorization</div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl text-center">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600">VLC 3.0+</div>
+                        <div class="text-xs font-medium text-slate-500 mt-1">Industrial Playback Backend</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CORE CAPABILITIES SECTION -->
+        <section id="features" class="py-20 bg-white border-y border-slate-200/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold text-brand-600 tracking-wider uppercase">Capabilities Overview</h2>
+                    <p class="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">Engineered for Uncompromising Control</p>
+                    <p class="mt-4 text-slate-600">VisionCore provides plant operators and security personnel with high-density live streaming feeds, fine-grained administrative rights, and efficient local footprint execution.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Feature 1 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-border-all"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Multi-Stream RTSP Grid Matrix</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Dynamically render auto-calculated camera matrices (1x1, 2x2, custom aspect ratios) with single-click stream maximization, live stream isolation, and rapid window docking.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Seamless Grid Scale
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ultra-Low Latency Decoding</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Powered by an optimized VLC Media Player backend wrapper with hardware-accelerated frame skipping, network jitter caching, and smooth frame delivery.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Hardware Accelerated
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Granular Role Access Control</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Strict separation of duties with Master Admin and Operator role hierarchies. Assign explicit IP allowances, camera edit permissions, and system configuration access.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Role Hierarchy Enforced
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Audit-Ready Activity Logs</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Continuous user session logging capturing login timestamps, workstation identifiers, local network IP tracking, and remote command executions.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Timestamp Verification
+                        </div>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-sliders"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Centralized Stream Catalog</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Seamlessly synchronize, edit, or pull camera node lists into local installations with effortless bulk camera configuration and live network ping checks.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> One-Click Sync
+                        </div>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="glass-card glass-card-hover p-8 rounded-2xl relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 border border-brand-100">
+                                <i class="fa-solid fa-desktop"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Single Camera Focus & Zoom</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Dedicated single-feed mode with scroll wheel zoom-in controls, drag-and-move viewport navigation, and rapid shortcut toggles (F2, F10, F11).
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Mouse & Keyboard Shortcuts
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SYSTEM SPECIFICATIONS & COMPATIBILITY -->
+        <section id="specifications" class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left column -->
+                    <div class="lg:col-span-5">
+                        <span class="text-xs font-bold text-brand-600 tracking-wider uppercase">System Requirements</span>
+                        <h2 class="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">Technical Prerequisites</h2>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            VisionCore is designed to run efficiently on standard industrial hardware and operator terminals without requiring expensive dedicated workstation GPUs.
+                        </p>
+
+                        <div class="mt-8 space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-1">
+                                    <i class="fa-solid fa-check text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900 text-base">Operating System Compatibility</h4>
+                                    <p class="text-slate-500 text-sm">Windows 11, Windows 10, Windows 7 (32-bit & 64-bit Edition Support)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-1">
+                                    <i class="fa-solid fa-check text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900 text-base">VLC Player Dependency</h4>
+                                    <p class="text-slate-500 text-sm">VLC Media Player v3.0.23 or higher must be installed on host PC</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-1">
+                                    <i class="fa-solid fa-check text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900 text-base">Protocol Standards</h4>
+                                    <p class="text-slate-500 text-sm">RTSP Stream Protocol over TCP Port 554 (H.264/H.265 streams)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right column Specs Card -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                                <h3 class="font-bold text-slate-900 text-lg">System Specifications Matrix</h3>
+                                <span class="px-3 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md border border-brand-200/50">Verified Build v1.1.9.8</span>
+                            </div>
+
+                            <div class="divide-y divide-slate-100 text-sm">
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Executable Binary</span>
+                                    <span class="font-mono text-slate-800 font-medium">VisionCore.Installation.exe</span>
+                                </div>
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Default Install Footprint</span>
+                                    <span class="text-slate-800 font-medium">&lt; 15 MB Local Overhead</span>
+                                </div>
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Stream Transport</span>
+                                    <span class="text-slate-800 font-medium">RTSP TCP (Drop-Late Frames Engine)</span>
+                                </div>
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Network Latency Caching</span>
+                                    <span class="text-slate-800 font-medium">1000ms Buffer (Customizable)</span>
+                                </div>
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Supported Monitor Setups</span>
+                                    <span class="text-slate-800 font-medium">Multi-Monitor & Borderless Fullscreen</span>
+                                </div>
+                                <div class="py-3 flex justify-between">
+                                    <span class="text-slate-500">Developer & Author</span>
+                                    <span class="text-slate-800 font-medium">Harsh Pal</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-xl text-xs text-slate-500 flex items-center gap-3">
+                                <i class="fa-solid fa-circle-info text-brand-500 text-base"></i>
+                                <span>Note: Verify that local firewall or antivirus policies permit RTSP communication over TCP Port 554 across plant VLANs.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECURITY & ENTERPRISE ARCHITECTURE -->
+        <section id="security" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold text-brand-600 tracking-wider uppercase">Enterprise Standards</span>
+                    <h2 class="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">Security & Control Architecture</h2>
+                    <p class="mt-4 text-slate-600">Built with rigorous authentication checks and real-time remote governance to guarantee system integrity in critical control room environments.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Box 1 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-4 border-t-brand-500">
+                        <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Authenticated Authorization</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Password-protected operator entry with mandatory user credential evaluation. Master administrative override capabilities for elevated stream modifications.
+                        </p>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-4 border-t-brand-500">
+                        <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Workstation Binding</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Restrict operator logins to authorized physical PC names, preventing unauthorized login attempts from external or unauthorized network hardware.
+                        </p>
+                    </div>
+
+                    <!-- Box 3 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-4 border-t-brand-500">
+                        <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-power-off"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Remote Session Governance</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Administrators can monitor live session rosters and trigger immediate session terminations or application teardowns across active surveillance clients.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DOWNLOAD CTA BANNER -->
+        <section class="py-16 bg-slate-900 text-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h2 class="text-3xl font-extrabold sm:text-4xl">Ready to Deploy VisionCore?</h2>
+                <p class="mt-4 text-slate-300 max-w-2xl mx-auto text-base">
+                    Download the official installation package and experience streamlined, reliable CCTV monitoring across your industrial facility.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://github.com/Ranasugars/VisionCore/releases/download/v1.1.9.8/VisionCore.Installation.exe" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-brand-500 text-white font-semibold text-base shadow-lg hover:bg-brand-600 transition-all">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Installation Package</span>
+                    </a>
+                </div>
+                <div class="mt-6 text-xs text-slate-400">
+                    Version 1.1.9.8 &bull; Windows 7/10/11 Compatible &bull; Standalone Application
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <!-- Footer Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white font-bold text-sm">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="font-bold text-slate-900 text-lg">VisionCore</span>
+                    <span class="text-xs text-slate-400">v1.1.9.8</span>
+                </div>
+
+                <!-- Copyright -->
+                <div class="text-sm text-slate-500 text-center">
+                    &copy; 2026 <span class="font-semibold text-slate-700">Harsh Pal</span>. All Rights Reserved.
+                </div>
+
+                <!-- Technical Tag -->
+                <div class="text-xs text-slate-400 flex items-center gap-2">
+                    <i class="fa-solid fa-code text-slate-400"></i>
+                    <span>CCTV Monitoring & Management System</span>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
